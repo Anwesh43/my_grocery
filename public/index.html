@@ -1,0 +1,73 @@
+<html lang="en" >
+    <head>
+<!-- Angular Material style sheet -->
+        <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+<body>
+<!--
+Your HTML content here
+-->
+
+<!-- Angular Material requires Angular.js Libraries -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-messages.min.js"></script>
+
+<!-- Angular Material Library -->
+    <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.js"></script>
+    <script src="/js/appService.js"></script>
+    <script src="/js/appController.js"></script>
+    <script src="/js/app.js"></script>
+
+    <div layout="column" layout-fill ng-app="groceryStoreApp">
+
+
+      <md-toolbar>
+        <div class="md-toolbar-tools" ng-controller="cartController">
+          <md-button ng-click="showSideNav('left')"><i class="material-icons">menu</i></md-button>
+          <span>Grocery Store</span>
+      <!-- fill up the space between left and right area -->
+          <span flex></span>
+            <md-button ng-click="showDialog()">
+              <i class="material-icons">add_shopping_cart</i>{{items.length}}
+            </md-button>
+        </div>
+      </md-toolbar>
+        <md-content layout="row">
+
+              <div flex="20" flex-gt-sm="20" ng-controller="sideNavController">
+                  <md-sidenav id="sideNav" md-component-id="left" class="md-sidenav-left md-whiteframe-z2" md-is-locked-open="$mdMedia('gt-sm')">
+                    <md-content>
+                        <md-list>
+                            <md-list-item ng-repeat="menuLink in menuLinks">
+                                <md-button href="{{menuLink.href}}">{{menuLink.title}}</md-button>
+                            </md-list-item>
+                        </md-list>
+                    </md-content>
+                </md-sidenav>
+              </div>
+              <div flex="5" flex-gt-sm="5">
+
+              </div>
+              <div flex="75" flex-gt-sm="75" ng-controller="gridController" >
+              <md-grid-list md-cols="1" md-cols-sm="1" md-cols-md="2" md-cols-lg="3" md-cols-gt-lg ="2" md-row-height="{{getRowHeight()}}" >
+                  <md-grid-tile ng-repeat="item in items">
+                      <md-card>
+                          <img ng-src="{{item.img}}">
+                          <md-card-header>
+                              <h1>{{item.name}}</h1>
+                          </md-card-header>
+                          <md-card-content>
+                              <p>{{item.price}}</p>
+                          </md-card-content>
+                          <span><md-button ng-click="decrementQuantity($index)"><i class="material-icons">remove_circle</i></md-button>{{userDisplayedItems[$index].quantity}}<md-button ng-click="incrementQuantity($index)"><i class="material-icons">add_circle</i></md-button></span>
+                    </md-card>
+                  </md-grid-tile>
+                </md-grid-list>
+            </div>
+      </md-content>
+    </div>
+  </body>
+</html>
